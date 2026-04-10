@@ -1,0 +1,45 @@
+name: Online Bank CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies (Auth Service)
+        run: |
+          cd auth-service
+          npm install
+
+      - name: Install dependencies (Account Service)
+        run: |
+          cd account-service
+          npm install
+
+      - name: Install dependencies (Transaction Service)
+        run: |
+          cd transaction-service
+          npm install
+
+      - name: Build Docker Image (Auth)
+        run: docker build -t auth-service ./auth-service
+
+      - name: Build Docker Image (Account)
+        run: docker build -t account-service ./account-service
+
+      - name: Build Docker Image (Transaction)
+        run: docker build -t transaction-service ./transaction-service
+
+      - name: CI Complete Message
+        run: echo "CI/CD Pipeline executed successfully"
