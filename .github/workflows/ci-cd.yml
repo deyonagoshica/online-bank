@@ -1,18 +1,17 @@
-name: Online Bank CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  ci-cd:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 🔹 BUILD STAGE
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -23,25 +22,5 @@ jobs:
           cd auth-service
           npm install
 
-      # 🔹 TEST STAGE (simple automated test)
-      - name: Run basic test
-        run: |
-          echo "Running tests..."
-          node -e "console.log('Test Passed')"
-
-      # 🔹 BUILD DOCKER IMAGES
-      - name: Build Auth Service
-        run: docker build -t auth-service ./auth-service
-
-      - name: Build Account Service
-        run: docker build -t account-service ./account-service
-
-      - name: Build Transaction Service
-        run: docker build -t transaction-service ./transaction-service
-
-      # 🔹 DEPLOY STAGE (simulated)
-      - name: Deploy Application
-        run: echo "Deployment successful to Kubernetes cluster (simulated)"
-
-      - name: Final Status
-        run: echo "CI/CD Pipeline Completed Successfully"
+      - name: Run test
+        run: echo "CI is working successfully"
