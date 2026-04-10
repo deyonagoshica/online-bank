@@ -11,7 +11,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  res.send("Login successful");
+  res.send("Login successful - feature update");
 });
 
 app.listen(5001, () => console.log("Auth Service running on 5001"));
